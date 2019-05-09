@@ -6,7 +6,7 @@
 /*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 12:20:41 by agelloz           #+#    #+#             */
-/*   Updated: 2019/05/08 21:17:42 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/05/09 18:47:16 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,16 @@
 #include "libft.h"
 #include "fillit.h"
 
-int				error(char **line, int fd, int code)
-{
-	ft_strdel(line);
-	ft_putstr("error code ");
-	ft_putnbr(code);
-	ft_putchar('\n');
-	close(fd);
-	return (0);
-}
-
-void			initialize(char (*t)[104][4])
+void	initialize(char (*t)[130][5])
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (i < 104)
+	while (i < 130)
 	{
 		j = 0;
-		while (j < 4)
+		while (j < 5)
 		{
 			(*t)[i][j] = '\0';
 			j++;
@@ -43,20 +33,54 @@ void			initialize(char (*t)[104][4])
 	}
 }
 
-int				main(int ac, char **av)
+void	fill_tetriminos(char (*t)[130][5], char **line, int i)
 {
+	
+}
+
+int		check_contacts(char t[130][5], int errors)
+{
+	int i;
+	int j;
+	int contacts;
+
+	i = 0;
+	contacts = 0;
+	while (i < 129)
+	{
+		j = -1;
+		contacts = (i % 5 == 4) ? 0 : contacts;
+		while (++j < 4)
+		{
+			if (t[i][j] == '#')
+			{
+				contacts = (t[i + 1][j] == '#') ? contacts + 1 : contacts;
+				contacts = (i % 5 > 0 && t[i - 1][j] == '#') ? contacts + 1 : contacts;
+				contacts = (t[i][j + 1] == '#') ? contacts + 1 : contacts;
+				contacts = (j > 0 && t[i][j - 1] == '#') ? contacts + 1 : contacts;
+				errors = (contacts == 0) ? errors + 1 : errors;
+			}
+		}
+		i++;
+		errors = (i % 5 == 4 && t[i - 1][0] && contacts != 6 && contacts != 8) ? errors + 1 : errors;
+	}
+	return (errors);
+}
+
+int		main(int ac, char **av)
+{
+	int			errors;
 	int			fd;
 	char		*line;
 	char		*p;
 	int 		i;
 	int 		j;
 	int 		blocks;
-	char		t[104][4];
-	int			x;
-	int			y;
+	char		t[130][5];
 
-	line = NULL;
 	fd = -1;
+	line = NULL;
+	errors = 0;
 	if (ac == 2)
 	{
 		initialize(&t);
@@ -68,72 +92,47 @@ int				main(int ac, char **av)
 			if (!*line)
 			{
 				if (i == 0 || i % 5 != 4)
-					return (error(&line, fd, 1));
+					errors++;
 				else
 					blocks = 0;
 			}
 			if (*line && ft_strlen(line) != 4)
-				return (error(&line, fd, 2));
+				errors++;
 			p = line;
 			while (*p)
 			{
 				if (*p != '#' && *p != '.')
-					return (error(&line, fd, 3));
+				{
+					errors++;
+					close(fd);
+				}
 				else if (*p == '#')
 					blocks++;
 				p++;
 			}
-			if (i == 0 || i % 5 != 4)
+			if ((i == 0 || i % 5 != 4) && i < 129)
 			{
 				p = line;
 				j = 0;
 				while (*p)
 					t[i][j++] = *p++;
-				ft_putendl(t[i]);
 			}
-			else
-				ft_putchar('\n');
-			if (i % 5 == 4 && blocks != 4)
-				return (error(&line, fd, 4));
 			i++;
+			if (i % 5 == 4 && blocks != 4)
+				errors++;
 			ft_strdel(&line);
 		}
-		if (i == 0 || i % 5 != 4)
-			return (error(&line, fd, 5));
+		if (i == 0 || i % 5 != 4 || i > 129)
+			errors++;
 		close(fd);
-		i = 0;
-		while (i < 104)
-		{
-			j = 0;
-			while (j < 4)
-			{
-				x = j % 4;
-				y = i % 4;
-				if (t[i][j] = '#')
-				{
-					if ((x == 2 || x == 3) && (y == 2 || y == 3)) //easy middle
-						if (t[i + 1][j] != '#' && t[i - 1][j] != '#' && t[i][j + 1] != '#' && t[i][j - 1] != '#')
-							return (error(&line, fd, 6));
-					if (x == 1 && y == 1) //top left corner
-						if (t[i][j + 1] != '#' && t[i + 1][j] != '#')
-							return (error(&line, fd, 6));
-					if (x == 4 && y == 1) //top right corner
-						if (t[i][j - 1] != '#' && t[i + 1][j] != '#')
-							return (error(&line, fd, 6));
-					if (x == 1 && y == 4) //bottom left corner
-						if (t[i][j + 1] != '#' && t[i - 1][j] != '#')
-							return (error(&line, fd, 6));
-					if (x == 4 && y == 4) //bottom right corner
-						if (t[i][j - 1] != '#' && t[i][j - 1] != '#')
-							return (error(&line, fd, 6));
-				}
-				j++;
-			}
-			i++;
-		}
-		ft_putendl("correct file");
+		errors = check_contacts(t, errors);
 	}
 	else
-		return (error(&line, fd, 6));
+		ft_putendl("usage: ./fillit file");
+	if (errors)
+	{
+		ft_putendl("error");
+		(fd != -1) ? close(fd) : 1;
+	}
 	return (0);
 }
