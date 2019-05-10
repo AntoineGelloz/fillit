@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror
 LIBH = libft/includes
 LIBA = libft/libft.a
 
-SRC = parsing.c get_next_line.c
+SRC = fillit.c get_next_line.c
 OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)
