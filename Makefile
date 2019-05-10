@@ -6,7 +6,7 @@
 #    By: agelloz <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 11:12:29 by agelloz           #+#    #+#              #
-#    Updated: 2019/05/08 19:31:37 by agelloz          ###   ########.fr        #
+#    Updated: 2019/05/10 18:06:06 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror
 LIBH = libft/includes
 LIBA = libft/libft.a
 
-SRC = main.c get_next_line.c
+SRC = parsing.c get_next_line.c
 OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)
