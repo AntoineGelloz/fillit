@@ -6,12 +6,12 @@
 /*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 11:34:39 by agelloz           #+#    #+#             */
-/*   Updated: 2019/05/13 16:22:11 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/05/13 17:55:46 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdio.h"
 #include "fillit.h"
+#include <fcntl.h>
 
 static	int		test_empty_file(char *filename)
 {

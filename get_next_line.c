@@ -6,11 +6,10 @@
 /*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 12:04:47 by agelloz           #+#    #+#             */
-/*   Updated: 2019/05/11 19:48:00 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/05/13 17:50:40 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "fillit.h"
 
 void		memmoveclear(void **dst, void *src)

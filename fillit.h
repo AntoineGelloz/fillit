@@ -6,16 +6,15 @@
 /*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 11:44:18 by agelloz           #+#    #+#             */
-/*   Updated: 2019/05/12 21:12:14 by ptroger          ###   ########.fr       */
+/*   Updated: 2019/05/13 17:55:01 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
-# include <fcntl.h>
-# include "libft/includes/libft.h"
+# include "libft.h"
 
-# define BUFF_SIZE 9
+# define BUFF_SIZE 20
 
 typedef struct			s_tetris
 {
@@ -33,10 +32,10 @@ typedef struct			s_map
 
 typedef struct			s_l
 {
-	int					maxx;
-	int					maxy;
 	int					x;
 	int					y;
+	int					maxx;
+	int					maxy;
 }						t_l;
 
 void					initialize(char (*tetris)[6][6]);

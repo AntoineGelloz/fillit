@@ -6,11 +6,10 @@
 /*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 12:02:11 by agelloz           #+#    #+#             */
-/*   Updated: 2019/05/12 20:50:27 by ptroger          ###   ########.fr       */
+/*   Updated: 2019/05/13 17:51:13 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "fillit.h"
 
 static int	valid_format(char tetris[6][6])
