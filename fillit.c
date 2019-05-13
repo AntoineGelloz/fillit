@@ -6,7 +6,7 @@
 /*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 11:34:39 by agelloz           #+#    #+#             */
-/*   Updated: 2019/05/13 13:27:47 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/05/13 16:22:11 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static	int		test_empty_file(char *filename)
 		ft_strdel(&buf);
 		return (-1);
 	}
-	while (read(fd, buf, 1) && i++ < 150)
+	while (read(fd, buf, 1) && i++ < 700)
 		;
 	if (buf[0] != '\n')
 	{
