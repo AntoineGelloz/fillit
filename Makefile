@@ -6,7 +6,7 @@
 #    By: agelloz <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 11:12:29 by agelloz           #+#    #+#              #
-#    Updated: 2019/05/12 20:24:50 by ptroger          ###   ########.fr        #
+#    Updated: 2019/05/13 12:00:37 by agelloz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,13 @@ OBJ = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(LIBA) $(OBJ) Makefile
-	$(CC) $(CFLAGS) -I$(LIBH) -Llibft -lft -o $(NAME) -g3 $(OBJ)
+	$(CC) $(CFLAGS) -I$(LIBH) -Llibft -lft -o $(NAME) $(OBJ)
 
 $(LIBA):
 	make -C libft
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I$(LIBH) -o $@ -c $< -g3
+	$(CC) $(CFLAGS) -I$(LIBH) -o $@ -c $<
 
 clean:
 	make -Clibft fclean

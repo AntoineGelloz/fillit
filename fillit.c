@@ -6,7 +6,7 @@
 /*   By: agelloz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 11:34:39 by agelloz           #+#    #+#             */
-/*   Updated: 2019/05/12 21:45:58 by agelloz          ###   ########.fr       */
+/*   Updated: 2019/05/13 12:59:37 by agelloz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,25 @@
 
 static	int		test_empty_file(char *filename)
 {
-	char	*str;
+	char	*buf;
 	int		fd;
 
-	if (!(str = ft_strnew(1)))
+	if (!(buf = ft_strnew(1)))
 		return (-1);
 	fd = open(filename, O_RDONLY);
-	if (read(fd, str, 1) < 0 || *str == '\0' || (*str != '.' && *str != '#'))
+	if (read(fd, buf, 1) < 0 || *buf == '\0' || (*buf != '.' && *buf != '#'))
 	{
-		free(str);
-		str = NULL;
+		ft_strdel(&buf);
 		return (-1);
 	}
-	free(str);
-	str = NULL;
+	while (read(fd, buf, 1))
+		;
+	if (buf[0] != '\n')
+	{
+		ft_strdel(&buf);
+		return (-1);
+	}
+	ft_strdel(&buf);
 	close(fd);
 	return (1);
 }
